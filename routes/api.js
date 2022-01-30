@@ -1,6 +1,6 @@
 const api = require("express").Router();
 const {v4: uuidv4} = require('uuid');
-const { readFromFile, readAndAppend } = require("../helpers/fsUtils");
+const { readFromFile, readAndAppend, readAndDelete } = require("../helpers/fsUtils");
 
 api.get('/notes', (req, res) => {
     readFromFile('./db/db.json').then(data => res.json(JSON.parse(data)))
@@ -30,7 +30,20 @@ api.post('/notes', (req, res) => {
 });
 
 api.delete('/notes/:id', (req, res) => {
-    
+    const id = req.id;
+
+    if (id){
+        readAndDelete(id, './db/db.json');
+
+        const response = {
+            status: 'note deleted',
+            body: id,
+        };
+
+        res.json(response)
+    } else {
+        res.json('Error deleting note');
+    }
 });
 
 module.exports = api;
