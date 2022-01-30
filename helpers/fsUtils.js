@@ -37,16 +37,8 @@ const readAndDelete = (id, file) => {
       console.error(err);
     } else {
       const parsedData = JSON.parse(data);
-      let temp = null;
-      for (var i=0; i<parsedData.length; i++){
-        if(data[i].note_id === id){
-          temp = i;
-        }
-      }
-      if (temp){
-        parsedData.splice(temp, 1);
-      }
-      writeToFile(file, parsedData);
+      const newNotes = parsedData.filter(note => note.id !== id);
+      writeToFile(file, newNotes);
     }
   });
 };

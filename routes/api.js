@@ -11,7 +11,7 @@ api.post('/notes', (req, res) => {
 
     if (title && text) {
         const newNote = {
-            note_id: uuidv4(),
+            id: uuidv4(),
             title,
             text,
         };
