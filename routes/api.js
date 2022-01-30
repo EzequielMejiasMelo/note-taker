@@ -30,14 +30,15 @@ api.post('/notes', (req, res) => {
 });
 
 api.delete('/notes/:id', (req, res) => {
-    const id = req.id;
+    const noteId = req.params.id;
+    console.log(noteId);
 
-    if (id){
-        readAndDelete(id, './db/db.json');
+    if (noteId){
+        readAndDelete(noteId, './db/db.json');
 
         const response = {
             status: 'note deleted',
-            body: id,
+            body: noteId,
         };
 
         res.json(response)
